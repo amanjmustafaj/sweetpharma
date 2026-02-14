@@ -1,9 +1,12 @@
-// Admin Panel JavaScript
+// Admin Panel JavaScript - Fixed Version
 
 const PASSWORD = 'sweet2024';
 let branches = [];
+let socialMedia = [];
 let branchCounter = 0;
+let socialCounter = 0;
 let currentAdminLang = 'en';
+let currentContentLang = 'en'; // For content editing tabs
 
 // Admin translations
 const adminTranslations = {
@@ -14,7 +17,7 @@ const adminTranslations = {
             logout: "Logout",
             successMsg: "Changes saved successfully! ✓",
             welcome: "👋 Welcome to Admin Panel",
-            welcomeText: "Manage all aspects of your website from here. Remember to click \"Save Changes\" after making any modifications.",
+            welcomeText: "Manage all aspects of your website from here.",
             saveChanges: "💾 Save All Changes"
         },
         tabs: {
@@ -24,57 +27,44 @@ const adminTranslations = {
             social: "Social Media"
         },
         content: {
-            title: "📝 Website Content & Titles",
-            description: "Edit all text content that appears on your website. Changes will be visible in all languages.",
-            hero: "Hero Section",
-            heroTitle: "Main Title (Hero)",
-            heroTitleKu: "Main Title (Kurdish)",
-            heroTitleAr: "Main Title (Arabic)",
-            heroDesc: "Hero Description (English)",
-            heroDescKu: "Hero Description (Kurdish)",
-            heroDescAr: "Hero Description (Arabic)",
-            english: "English",
-            branches: "Branches Section",
-            branchesTitle: "Section Title (English)",
-            branchesTitleKu: "Section Title (Kurdish)",
-            branchesTitleAr: "Section Title (Arabic)",
-            service: "Home Service Section",
-            serviceTitle: "Service Title (English)",
-            serviceTitleKu: "Service Title (Kurdish)",
-            serviceTitleAr: "Service Title (Arabic)"
+            title: "📝 Website Content",
+            selectLang: "Select Language to Edit:",
+            english: "🇬🇧 English",
+            kurdish: "🇮🇶 کوردی",
+            arabic: "🇸🇦 العربية"
         },
         branches: {
             title: "🏥 Branch Management",
-            description: "Add and manage all your service locations. Each branch will appear on the main website.",
+            description: "Add and manage your service locations.",
             addNew: "➕ Add New Branch",
             noBranches: "No Branches Yet",
-            noBranchesText: "Click \"Add New Branch\" to create your first service location",
+            noBranchesText: "Click \"Add New Branch\" to start",
             branchNumber: "Branch",
-            deleteBranch: "🗑️ Delete Branch",
+            deleteBranch: "🗑️ Delete",
             name: "Branch Name *",
-            badge: "Badge (Type)",
+            badge: "Badge",
             address: "Address *",
-            phone: "Phone Number *",
-            phone2: "Phone Number 2 (Optional)",
+            phone: "Phone *",
+            phone2: "Phone 2 (Optional)",
             email: "Email",
-            specialty: "Specialty (Optional)",
-            imageColor: "🎨 Image & Color",
+            specialty: "Specialty",
+            imageColor: "🎨 Display",
             displayType: "Display Type",
-            emoji: "Emoji Icon",
+            emoji: "Emoji",
             imageUrl: "Image URL",
-            color: "Card Color",
-            location: "📍 Location (Optional)",
-            latitude: "Latitude",
-            longitude: "Longitude",
-            services: "Services/Operations (Optional)",
-            deleteConfirm: "Are you sure you want to delete this branch? This cannot be undone!"
+            color: "Color",
+            deleteConfirm: "Delete this branch?"
         },
         service: {
-            title: "🏠 Home Testing Service",
+            title: "🏠 Home Service",
             phone: "Service Phone Number"
         },
         social: {
-            title: "📱 Social Media Links"
+            title: "📱 Social Media",
+            addNew: "➕ Add Social Media",
+            name: "Platform Name",
+            url: "URL/Link",
+            delete: "🗑️ Delete"
         }
     },
     ku: {
@@ -82,243 +72,215 @@ const adminTranslations = {
             title: "پانێڵی ئەدمین - سویت فارما",
             preview: "👁️ پێشبینین",
             logout: "چوونە دەرەوە",
-            successMsg: "گۆڕانکارییەکان بە سەرکەوتوویی پاشەکەوت کرا! ✓",
-            welcome: "👋 بەخێربێیت بۆ پانێڵی ئەدمین",
-            welcomeText: "لێرەوە دەتوانیت هەموو بەشەکانی ماڵپەڕەکە بەڕێوە ببەیت. لەبیرت نەچێت دوگمەی \"پاشەکەوتکردن\" دابگریت.",
-            saveChanges: "💾 پاشەکەوتکردنی هەموو گۆڕانکارییەکان"
+            successMsg: "پاشەکەوت کرا! ✓",
+            welcome: "👋 بەخێربێیت",
+            welcomeText: "لێرەوە ماڵپەڕەکە بەڕێوە ببە",
+            saveChanges: "💾 پاشەکەوتکردن"
         },
         tabs: {
-            content: "ناوەڕۆکی ماڵپەڕ",
+            content: "ناوەڕۆک",
             branches: "لقەکان",
             service: "خزمەتی ماڵەوە",
             social: "سۆشیال میدیا"
         },
         content: {
-            title: "📝 ناوەڕۆک و سەردێڕەکانی ماڵپەڕ",
-            description: "دەستکاری هەموو دەقەکانی ماڵپەڕەکە بکە. گۆڕانکارییەکان لە هەموو زمانەکاندا دەردەکەون.",
-            hero: "بەشی سەرەکی",
-            heroTitle: "سەردێڕی سەرەکی",
-            heroTitleKu: "سەردێڕی سەرەکی (کوردی)",
-            heroTitleAr: "سەردێڕی سەرەکی (عەرەبی)",
-            heroDesc: "وەسفی سەرەکی (ئینگلیزی)",
-            heroDescKu: "وەسفی سەرەکی (کوردی)",
-            heroDescAr: "وەسفی سەرەکی (عەرەبی)",
-            english: "ئینگلیزی",
-            branches: "بەشی لقەکان",
-            branchesTitle: "سەردێڕی بەش (ئینگلیزی)",
-            branchesTitleKu: "سەردێڕی بەش (کوردی)",
-            branchesTitleAr: "سەردێڕی بەش (عەرەبی)",
-            service: "بەشی خزمەتی ماڵەوە",
-            serviceTitle: "سەردێڕی خزمەت (ئینگلیزی)",
-            serviceTitleKu: "سەردێڕی خزمەت (کوردی)",
-            serviceTitleAr: "سەردێڕی خزمەت (عەرەبی)"
+            title: "📝 ناوەڕۆکی ماڵپەڕ",
+            selectLang: "زمان هەڵبژێرە:",
+            english: "🇬🇧 ئینگلیزی",
+            kurdish: "🇮🇶 کوردی",
+            arabic: "🇸🇦 عەرەبی"
         },
         branches: {
             title: "🏥 بەڕێوەبردنی لقەکان",
-            description: "لقەکانت زیاد بکە و بەڕێوەیان ببە. هەر لقێک لەسەر ماڵپەڕەکە دەردەکەوێت.",
-            addNew: "➕ زیادکردنی لقی نوێ",
+            description: "لقەکان زیاد بکە و بەڕێوەیان ببە",
+            addNew: "➕ زیادکردنی لق",
             noBranches: "هێشتا لقێک نییە",
-            noBranchesText: "کرتە لەسەر \"زیادکردنی لقی نوێ\" بکە بۆ دروستکردنی یەکەم لقەکەت",
-            branchNumber: "لقی",
-            deleteBranch: "🗑️ سڕینەوەی لقەکە",
-            name: "ناوی لقەکە *",
-            badge: "جۆر",
+            noBranchesText: "کرتە لەسەر \"زیادکردنی لق\" بکە",
+            branchNumber: "لق",
+            deleteBranch: "🗑️ سڕینەوە",
+            name: "ناوی لق *",
+            badge: "نیشان",
             address: "ناونیشان *",
-            phone: "ژمارەی تەلەفۆن *",
-            phone2: "ژمارەی تەلەفۆن ٢ (ئیختیاری)",
+            phone: "تەلەفۆن *",
+            phone2: "تەلەفۆن ٢",
             email: "ئیمەیڵ",
-            specialty: "تایبەتمەندی (ئیختیاری)",
-            imageColor: "🎨 وێنە و ڕەنگ",
+            specialty: "تایبەتمەندی",
+            imageColor: "🎨 ڕواڵەت",
             displayType: "جۆری پیشاندان",
-            emoji: "ئایکۆنی ئیمۆجی",
+            emoji: "ئیمۆجی",
             imageUrl: "لینکی وێنە",
-            color: "ڕەنگی کارت",
-            location: "📍 شوێن (ئیختیاری)",
-            latitude: "پانی",
-            longitude: "درێژی",
-            services: "خزمەتگوزاریەکان (ئیختیاری)",
-            deleteConfirm: "دڵنیایت لە سڕینەوەی ئەم لقە؟ ناتوانیت دووبارە بیگەڕێنیتەوە!"
+            color: "ڕەنگ",
+            deleteConfirm: "ئەم لقە بسڕیتەوە؟"
         },
         service: {
-            title: "🏠 خزمەتی تاقیگە لە ماڵەوە",
-            phone: "ژمارەی تەلەفۆنی خزمەت"
+            title: "🏠 خزمەتی ماڵەوە",
+            phone: "ژمارەی تەلەفۆن"
         },
         social: {
-            title: "📱 سۆشیال میدیا"
+            title: "📱 سۆشیال میدیا",
+            addNew: "➕ زیادکردن",
+            name: "ناوی پلاتفۆرم",
+            url: "لینک",
+            delete: "🗑️ سڕینەوە"
         }
     },
     ar: {
         admin: {
             title: "لوحة الإدارة - سويت فارما",
-            preview: "👁️ معاينة الموقع",
-            logout: "تسجيل الخروج",
-            successMsg: "تم حفظ التغييرات بنجاح! ✓",
-            welcome: "👋 مرحباً بك في لوحة الإدارة",
-            welcomeText: "أدر جميع جوانب موقعك من هنا. تذكر النقر على \"حفظ التغييرات\" بعد إجراء أي تعديلات.",
-            saveChanges: "💾 حفظ جميع التغييرات"
+            preview: "👁️ معاينة",
+            logout: "خروج",
+            successMsg: "تم الحفظ! ✓",
+            welcome: "👋 مرحباً",
+            welcomeText: "أدر موقعك من هنا",
+            saveChanges: "💾 حفظ"
         },
         tabs: {
-            content: "محتوى الموقع",
+            content: "المحتوى",
             branches: "الفروع",
             service: "الخدمة المنزلية",
             social: "وسائل التواصل"
         },
         content: {
-            title: "📝 محتوى وعناوين الموقع",
-            description: "عدّل جميع النصوص التي تظهر على موقعك. ستكون التغييرات مرئية في جميع اللغات.",
-            hero: "القسم الرئيسي",
-            heroTitle: "العنوان الرئيسي",
-            heroTitleKu: "العنوان الرئيسي (كردي)",
-            heroTitleAr: "العنوان الرئيسي (عربي)",
-            heroDesc: "الوصف الرئيسي (إنجليزي)",
-            heroDescKu: "الوصف الرئيسي (كردي)",
-            heroDescAr: "الوصف الرئيسي (عربي)",
-            english: "إنجليزي",
-            branches: "قسم الفروع",
-            branchesTitle: "عنوان القسم (إنجليزي)",
-            branchesTitleKu: "عنوان القسم (كردي)",
-            branchesTitleAr: "عنوان القسم (عربي)",
-            service: "قسم الخدمة المنزلية",
-            serviceTitle: "عنوان الخدمة (إنجليزي)",
-            serviceTitleKu: "عنوان الخدمة (كردي)",
-            serviceTitleAr: "عنوان الخدمة (عربي)"
+            title: "📝 محتوى الموقع",
+            selectLang: "اختر اللغة:",
+            english: "🇬🇧 إنجليزي",
+            kurdish: "🇮🇶 كردي",
+            arabic: "🇸🇦 عربي"
         },
         branches: {
             title: "🏥 إدارة الفروع",
-            description: "أضف وأدر جميع مواقع خدماتك. سيظهر كل فرع على الموقع الرئيسي.",
-            addNew: "➕ إضافة فرع جديد",
-            noBranches: "لا توجد فروع بعد",
-            noBranchesText: "انقر على \"إضافة فرع جديد\" لإنشاء أول موقع خدمة لك",
-            branchNumber: "الفرع",
-            deleteBranch: "🗑️ حذف الفرع",
+            description: "أضف وأدر فروعك",
+            addNew: "➕ إضافة فرع",
+            noBranches: "لا توجد فروع",
+            noBranchesText: "انقر \"إضافة فرع\"",
+            branchNumber: "فرع",
+            deleteBranch: "🗑️ حذف",
             name: "اسم الفرع *",
-            badge: "النوع",
+            badge: "شارة",
             address: "العنوان *",
-            phone: "رقم الهاتف *",
-            phone2: "رقم الهاتف ٢ (اختياري)",
-            email: "البريد الإلكتروني",
-            specialty: "التخصص (اختياري)",
-            imageColor: "🎨 الصورة واللون",
+            phone: "الهاتف *",
+            phone2: "هاتف ٢",
+            email: "البريد",
+            specialty: "التخصص",
+            imageColor: "🎨 العرض",
             displayType: "نوع العرض",
-            emoji: "أيقونة إيموجي",
+            emoji: "إيموجي",
             imageUrl: "رابط الصورة",
-            color: "لون البطاقة",
-            location: "📍 الموقع (اختياري)",
-            latitude: "خط العرض",
-            longitude: "خط الطول",
-            services: "الخدمات (اختياري)",
-            deleteConfirm: "هل أنت متأكد من حذف هذا الفرع؟ لا يمكن التراجع عن ذلك!"
+            color: "اللون",
+            deleteConfirm: "حذف هذا الفرع؟"
         },
         service: {
-            title: "🏠 خدمة الفحوصات المنزلية",
-            phone: "رقم هاتف الخدمة"
+            title: "🏠 الخدمة المنزلية",
+            phone: "رقم الهاتف"
         },
         social: {
-            title: "📱 وسائل التواصل الاجتماعي"
+            title: "📱 وسائل التواصل",
+            addNew: "➕ إضافة",
+            name: "اسم المنصة",
+            url: "الرابط",
+            delete: "🗑️ حذف"
         }
     }
 };
 
-// Change admin language
+// ========== ADMIN LANGUAGE SWITCHING ==========
 function changeAdminLanguage(lang) {
     currentAdminLang = lang;
     localStorage.setItem('adminLanguage', lang);
     
-    // Update HTML lang and dir
-    document.documentElement.lang = lang;
-    document.documentElement.dir = (lang === 'ar' || lang === 'ku') ? 'rtl' : 'ltr';
-    
-    // Update active language button
-    document.querySelectorAll('.admin-lang-switcher .lang-btn').forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.getAttribute('data-lang') === lang) {
-            btn.classList.add('active');
-        }
-    });
-    
-    // Update all translatable elements
-    updateAdminTranslations();
-    
-    // Re-render branches to update their labels
-    if (branches.length > 0) {
-        renderBranches();
-    }
-}
-
-// Update admin translations
-function updateAdminTranslations() {
-    const t = adminTranslations[currentAdminLang];
-    
-    document.querySelectorAll('[data-admin-i18n]').forEach(element => {
-        const key = element.getAttribute('data-admin-i18n');
-        const keys = key.split('.');
-        let value = t;
-        
-        for (const k of keys) {
-            value = value[k];
-        }
-        
-        if (value) {
-            if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-                element.placeholder = value;
+    // Update all admin translations
+    document.querySelectorAll('[data-admin-i18n]').forEach(el => {
+        const key = el.getAttribute('data-admin-i18n');
+        const translation = getNestedTranslation(adminTranslations[lang], key);
+        if (translation) {
+            if (el.tagName === 'INPUT' && el.type !== 'radio' && el.type !== 'checkbox') {
+                el.placeholder = translation;
             } else {
-                element.textContent = value;
+                el.textContent = translation;
             }
         }
     });
+    
+    // Update RTL
+    document.documentElement.setAttribute('dir', lang === 'ar' || lang === 'ku' ? 'rtl' : 'ltr');
 }
 
-// Login functionality
-document.getElementById('loginForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const password = document.getElementById('passwordInput').value;
+function getNestedTranslation(obj, path) {
+    return path.split('.').reduce((current, key) => current?.[key], obj);
+}
+
+// ========== CONTENT LANGUAGE TABS ==========
+function switchContentLang(lang) {
+    currentContentLang = lang;
     
+    // Hide all language sections
+    document.querySelectorAll('.content-lang-section').forEach(section => {
+        section.classList.remove('active');
+    });
+    
+    // Show selected language section
+    const section = document.getElementById(`content-${lang}`);
+    if (section) {
+        section.classList.add('active');
+    }
+    
+    // Update button active states - FIXED: use correct class name
+    document.querySelectorAll('.lang-btn-large').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    // Add active class to selected button
+    const activeBtn = document.querySelector(`.lang-btn-large[data-lang="${lang}"]`);
+    if (activeBtn) {
+        activeBtn.classList.add('active');
+    }
+    
+    console.log(`✅ Content language switched to: ${lang}`);
+}
+
+// ========== LOGIN ==========
+function login() {
+    const password = document.getElementById('passwordInput').value;
     if (password === PASSWORD) {
+        // Save login session
+        sessionStorage.setItem('adminLoggedIn', 'true');
+        
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('adminDashboard').style.display = 'block';
-        
-        // Load saved admin language
-        const savedLang = localStorage.getItem('adminLanguage') || 'en';
-        changeAdminLanguage(savedLang);
-        
         loadData();
     } else {
-        document.getElementById('loginError').style.display = 'block';
-        setTimeout(() => {
-            document.getElementById('loginError').style.display = 'none';
-        }, 3000);
+        alert('Incorrect password / وشەی نهێنی هەڵەیە');
     }
-});
+}
 
-// Logout functionality
 function logout() {
+    // Clear login session
+    sessionStorage.removeItem('adminLoggedIn');
+    
     document.getElementById('loginScreen').style.display = 'flex';
     document.getElementById('adminDashboard').style.display = 'none';
     document.getElementById('passwordInput').value = '';
 }
 
-// Tab switching
+// ========== TAB SWITCHING ==========
 function showTab(tabName) {
     // Hide all tabs
     document.querySelectorAll('.tab-content').forEach(tab => {
         tab.classList.remove('active');
     });
-    
-    // Remove active class from all tab buttons
-    document.querySelectorAll('.tab').forEach(btn => {
+    document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.classList.remove('active');
     });
     
     // Show selected tab
     document.getElementById(tabName).classList.add('active');
-    
-    // Add active class to clicked button
     event.target.classList.add('active');
 }
 
-// Add new branch
+// ========== BRANCH MANAGEMENT ==========
 function addNewBranch() {
-    const branch = {
+    branchCounter++;
+    const newBranch = {
         id: Date.now(),
         name: '',
         badge: '',
@@ -327,220 +289,25 @@ function addNewBranch() {
         phone2: '',
         email: '',
         specialty: '',
-        icon: '🏥',
-        color: 'gradient-cream',
         imageType: 'emoji',
+        icon: '🏥',
         imageUrl: '',
-        lat: '',
-        lng: '',
-        operations: ''
+        color: 'gradient-cream',
+        expanded: true
     };
     
-    branches.push(branch);
+    branches.push(newBranch);
     renderBranches();
 }
 
-// Remove branch
-function removeBranch(id) {
-    const t = adminTranslations[currentAdminLang].branches;
-    
-    if (!confirm(t.deleteConfirm)) {
-        return;
+function toggleBranch(id) {
+    const branch = branches.find(b => b.id === id);
+    if (branch) {
+        branch.expanded = !branch.expanded;
+        renderBranches();
     }
-    
-    branches = branches.filter(b => b.id !== id);
-    renderBranches();
 }
 
-// Render all branches
-function renderBranches() {
-    const container = document.getElementById('branchesContainer');
-    const emptyState = document.getElementById('emptyState');
-    
-    if (branches.length === 0) {
-        emptyState.style.display = 'block';
-        updateAdminTranslations(); // Update empty state text
-        return;
-    }
-    
-    emptyState.style.display = 'none';
-    
-    // Clear container except empty state
-    Array.from(container.children).forEach(child => {
-        if (child.id !== 'emptyState') {
-            child.remove();
-        }
-    });
-    
-    branches.forEach((branch, index) => {
-        const branchElement = createBranchElement(branch, index);
-        container.appendChild(branchElement);
-    });
-}
-
-// Create branch element
-function createBranchElement(branch, index) {
-    const t = adminTranslations[currentAdminLang].branches;
-    const div = document.createElement('div');
-    div.className = 'branch-item';
-    
-    div.innerHTML = `
-        <div class="branch-item-header">
-            <h3>${t.branchNumber} ${index + 1}</h3>
-            <button class="branch-delete-btn" onclick="removeBranch(${branch.id})">
-                ${t.deleteBranch}
-            </button>
-        </div>
-        
-        <div class="form-row">
-            <div class="form-group">
-                <label>${t.name}</label>
-                <input type="text" 
-                       placeholder="e.g., Sweet Pharma Zanko" 
-                       value="${branch.name}"
-                       onchange="updateBranch(${branch.id}, 'name', this.value)">
-            </div>
-            <div class="form-group">
-                <label>${t.badge}</label>
-                <input type="text" 
-                       placeholder="e.g., Pharmacy, Medical Lab" 
-                       value="${branch.badge}"
-                       onchange="updateBranch(${branch.id}, 'badge', this.value)">
-            </div>
-        </div>
-        
-        <div class="form-row">
-            <div class="form-group">
-                <label>${t.address}</label>
-                <textarea placeholder="Full address" 
-                          onchange="updateBranch(${branch.id}, 'address', this.value)">${branch.address}</textarea>
-            </div>
-        </div>
-        
-        <div class="form-row">
-            <div class="form-group">
-                <label>${t.phone}</label>
-                <input type="tel" 
-                       placeholder="+964 750 123 4567" 
-                       value="${branch.phone}"
-                       onchange="updateBranch(${branch.id}, 'phone', this.value)">
-            </div>
-            <div class="form-group">
-                <label>${t.phone2}</label>
-                <input type="tel" 
-                       placeholder="+964 770 123 4567" 
-                       value="${branch.phone2}"
-                       onchange="updateBranch(${branch.id}, 'phone2', this.value)">
-            </div>
-        </div>
-        
-        <div class="form-row">
-            <div class="form-group">
-                <label>${t.email}</label>
-                <input type="email" 
-                       placeholder="branch@example.com" 
-                       value="${branch.email}"
-                       onchange="updateBranch(${branch.id}, 'email', this.value)">
-            </div>
-            <div class="form-group">
-                <label>${t.specialty}</label>
-                <input type="text" 
-                       placeholder="e.g., Comprehensive Medical Lab" 
-                       value="${branch.specialty}"
-                       onchange="updateBranch(${branch.id}, 'specialty', this.value)">
-            </div>
-        </div>
-        
-        <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: var(--accent);">${t.imageColor}</h3>
-        
-        <div class="form-group">
-            <label>${t.displayType}</label>
-            <div class="image-type-toggle">
-                <label>
-                    <input type="radio" 
-                           name="imageType${branch.id}" 
-                           value="emoji" 
-                           ${branch.imageType === 'emoji' ? 'checked' : ''}
-                           onchange="updateBranch(${branch.id}, 'imageType', 'emoji'); renderBranches();">
-                    <span>${t.emoji}</span>
-                </label>
-                <label>
-                    <input type="radio" 
-                           name="imageType${branch.id}" 
-                           value="url" 
-                           ${branch.imageType === 'url' ? 'checked' : ''}
-                           onchange="updateBranch(${branch.id}, 'imageType', 'url'); renderBranches();">
-                    <span>${t.imageUrl}</span>
-                </label>
-            </div>
-        </div>
-        
-        ${branch.imageType === 'emoji' ? `
-            <div class="form-row">
-                <div class="form-group">
-                    <label>${t.emoji}</label>
-                    <input type="text" 
-                           maxlength="3" 
-                           placeholder="🏥" 
-                           value="${branch.icon}"
-                           onchange="updateBranch(${branch.id}, 'icon', this.value)">
-                </div>
-                <div class="form-group">
-                    <label>${t.color}</label>
-                    <select onchange="updateBranch(${branch.id}, 'color', this.value)">
-                        <option value="gradient-cream" ${branch.color === 'gradient-cream' ? 'selected' : ''}>Cream</option>
-                        <option value="gradient-brown" ${branch.color === 'gradient-brown' ? 'selected' : ''}>Brown</option>
-                        <option value="gradient-teal" ${branch.color === 'gradient-teal' ? 'selected' : ''}>Teal</option>
-                        <option value="gradient-pink" ${branch.color === 'gradient-pink' ? 'selected' : ''}>Pink</option>
-                        <option value="gradient-purple" ${branch.color === 'gradient-purple' ? 'selected' : ''}>Purple</option>
-                        <option value="gradient-blue" ${branch.color === 'gradient-blue' ? 'selected' : ''}>Blue</option>
-                        <option value="gradient-orange" ${branch.color === 'gradient-orange' ? 'selected' : ''}>Orange</option>
-                    </select>
-                </div>
-            </div>
-        ` : `
-            <div class="form-group">
-                <label>${t.imageUrl}</label>
-                <input type="url" 
-                       placeholder="https://example.com/image.jpg" 
-                       value="${branch.imageUrl}"
-                       onchange="updateBranch(${branch.id}, 'imageUrl', this.value)">
-                <small>💡 You can upload images to <a href="https://imgur.com/" target="_blank" style="color: var(--accent);">Imgur</a> and copy the link</small>
-            </div>
-        `}
-        
-        <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: var(--accent);">${t.location}</h3>
-        
-        <div class="form-row">
-            <div class="form-group">
-                <label>${t.latitude}</label>
-                <input type="text" 
-                       placeholder="36.1911" 
-                       value="${branch.lat}"
-                       onchange="updateBranch(${branch.id}, 'lat', this.value)">
-                <small>Get coordinates from <a href="https://www.google.com/maps" target="_blank" style="color: var(--accent);">Google Maps</a></small>
-            </div>
-            <div class="form-group">
-                <label>${t.longitude}</label>
-                <input type="text" 
-                       placeholder="44.0094" 
-                       value="${branch.lng}"
-                       onchange="updateBranch(${branch.id}, 'lng', this.value)">
-            </div>
-        </div>
-        
-        <div class="form-group">
-            <label>${t.services}</label>
-            <textarea placeholder="List services, one per line&#10;e.g.,&#10;Blood tests&#10;Medical consultations&#10;Pharmacy services" 
-                      onchange="updateBranch(${branch.id}, 'operations', this.value)">${branch.operations}</textarea>
-            <small>Enter each service on a new line</small>
-        </div>
-    `;
-    
-    return div;
-}
-
-// Update branch data
 function updateBranch(id, field, value) {
     const branch = branches.find(b => b.id === id);
     if (branch) {
@@ -548,94 +315,365 @@ function updateBranch(id, field, value) {
     }
 }
 
-// Save all data
+function deleteBranch(id) {
+    const t = adminTranslations[currentAdminLang].branches;
+    if (confirm(t.deleteConfirm)) {
+        branches = branches.filter(b => b.id !== id);
+        renderBranches();
+    }
+}
+
+function renderBranches() {
+    const container = document.getElementById('branchesContainer');
+    const empty = document.getElementById('emptyState');
+    const t = adminTranslations[currentAdminLang].branches;
+    
+    if (branches.length === 0) {
+        empty.style.display = 'block';
+        return;
+    }
+    
+    empty.style.display = 'none';
+    container.innerHTML = '';
+    
+    branches.forEach((branch, index) => {
+        const card = document.createElement('div');
+        card.className = 'branch-item';
+        
+        card.innerHTML = `
+            <div class="branch-header" onclick="toggleBranch(${branch.id})">
+                <div style="flex-grow:1;">
+                    <h4>${branch.name || `${t.branchNumber} ${index + 1}`}</h4>
+                    <small style="color:var(--text-light);">${branch.address || 'No address'}</small>
+                </div>
+                <button class="btn-icon" onclick="event.stopPropagation(); deleteBranch(${branch.id})">${t.deleteBranch}</button>
+            </div>
+            
+            <div class="branch-body" style="display:${branch.expanded ? 'block' : 'none'};">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>${t.name}</label>
+                        <input type="text" value="${branch.name}" onchange="updateBranch(${branch.id}, 'name', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>${t.badge}</label>
+                        <input type="text" value="${branch.badge}" onchange="updateBranch(${branch.id}, 'badge', this.value)">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>${t.address}</label>
+                    <textarea onchange="updateBranch(${branch.id}, 'address', this.value)">${branch.address}</textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>${t.phone}</label>
+                        <input type="tel" value="${branch.phone}" onchange="updateBranch(${branch.id}, 'phone', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>${t.phone2}</label>
+                        <input type="tel" value="${branch.phone2}" onchange="updateBranch(${branch.id}, 'phone2', this.value)">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>${t.email}</label>
+                        <input type="email" value="${branch.email}" onchange="updateBranch(${branch.id}, 'email', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>${t.specialty}</label>
+                        <input type="text" value="${branch.specialty}" onchange="updateBranch(${branch.id}, 'specialty', this.value)">
+                    </div>
+                </div>
+                
+                <h3 style="margin-top:2rem;color:var(--accent);">${t.imageColor}</h3>
+                
+                <div class="form-group">
+                    <label>${t.displayType}</label>
+                    <div style="display:flex;gap:1rem;">
+                        <label style="display:flex;align-items:center;gap:0.5rem;">
+                            <input type="radio" name="type${branch.id}" value="emoji" 
+                                   ${branch.imageType === 'emoji' ? 'checked' : ''}
+                                   onchange="updateBranch(${branch.id}, 'imageType', 'emoji'); renderBranches();">
+                            ${t.emoji}
+                        </label>
+                        <label style="display:flex;align-items:center;gap:0.5rem;">
+                            <input type="radio" name="type${branch.id}" value="url" 
+                                   ${branch.imageType === 'url' ? 'checked' : ''}
+                                   onchange="updateBranch(${branch.id}, 'imageType', 'url'); renderBranches();">
+                            ${t.imageUrl}
+                        </label>
+                    </div>
+                </div>
+                
+                ${branch.imageType === 'emoji' ? `
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>${t.emoji}</label>
+                            <input type="text" maxlength="3" value="${branch.icon}" 
+                                   onchange="updateBranch(${branch.id}, 'icon', this.value)">
+                        </div>
+                        <div class="form-group">
+                            <label>${t.color}</label>
+                            <select onchange="updateBranch(${branch.id}, 'color', this.value)">
+                                <option value="gradient-cream" ${branch.color === 'gradient-cream' ? 'selected' : ''}>Cream</option>
+                                <option value="gradient-brown" ${branch.color === 'gradient-brown' ? 'selected' : ''}>Brown</option>
+                                <option value="gradient-teal" ${branch.color === 'gradient-teal' ? 'selected' : ''}>Teal</option>
+                                <option value="gradient-pink" ${branch.color === 'gradient-pink' ? 'selected' : ''}>Pink</option>
+                            </select>
+                        </div>
+                    </div>
+                ` : `
+                    <div class="form-group">
+                        <label>${t.imageUrl}</label>
+                        <input type="url" value="${branch.imageUrl}" 
+                               onchange="updateBranch(${branch.id}, 'imageUrl', this.value)">
+                    </div>
+                `}
+            </div>
+        `;
+        
+        container.appendChild(card);
+    });
+}
+
+// ========== SOCIAL MEDIA MANAGEMENT ==========
+function addSocialMedia() {
+    socialCounter++;
+    const newSocial = {
+        id: Date.now(),
+        name: '',
+        url: ''
+    };
+    
+    socialMedia.push(newSocial);
+    renderSocialMedia();
+}
+
+function updateSocialMedia(id, field, value) {
+    const social = socialMedia.find(s => s.id === id);
+    if (social) {
+        social[field] = value;
+    }
+}
+
+function deleteSocialMedia(id) {
+    const t = adminTranslations[currentAdminLang].social;
+    if (confirm('Delete this social media?')) {
+        socialMedia = socialMedia.filter(s => s.id !== id);
+        renderSocialMedia();
+    }
+}
+
+function renderSocialMedia() {
+    const container = document.getElementById('socialMediaContainer');
+    const t = adminTranslations[currentAdminLang].social;
+    
+    if (socialMedia.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">📱</div>
+                <p>No social media links yet</p>
+            </div>
+        `;
+        return;
+    }
+    
+    container.innerHTML = '';
+    
+    socialMedia.forEach((social, index) => {
+        const card = document.createElement('div');
+        card.className = 'social-media-item';
+        
+        card.innerHTML = `
+            <div class="social-media-header">
+                <h4 style="color: var(--accent); font-size: 1.2rem; margin: 0;">Social Media ${index + 1}</h4>
+                <button class="social-delete-btn" onclick="deleteSocialMedia(${social.id})">${t.delete}</button>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>${t.name}</label>
+                    <input type="text" placeholder="Facebook, Instagram..." 
+                           value="${social.name}" 
+                           onchange="updateSocialMedia(${social.id}, 'name', this.value)">
+                </div>
+                <div class="form-group">
+                    <label>${t.url}</label>
+                    <input type="url" placeholder="https://..." 
+                           value="${social.url}" 
+                           onchange="updateSocialMedia(${social.id}, 'url', this.value)">
+                </div>
+            </div>
+        `;
+        
+        container.appendChild(card);
+    });
+    
+    console.log(`✅ Rendered ${socialMedia.length} social media items`);
+}
+
+// ========== SAVE & LOAD DATA ==========
 function saveData() {
     const data = {
         branches: branches,
-        service_phone: document.getElementById('servicePhone').value,
-        social_facebook: document.getElementById('socialFacebook').value,
-        social_instagram: document.getElementById('socialInstagram').value,
-        social_tiktok: document.getElementById('socialTiktok').value,
-        social_snapchat: document.getElementById('socialSnapchat').value,
-        // CMS Content
+        socialMedia: socialMedia,
+        service_phone: document.getElementById('servicePhone')?.value || '',
         content: {
+            // English
             hero_title_en: document.getElementById('heroTitle_en')?.value || '',
-            hero_title_ku: document.getElementById('heroTitle_ku')?.value || '',
-            hero_title_ar: document.getElementById('heroTitle_ar')?.value || '',
             hero_desc_en: document.getElementById('heroDesc_en')?.value || '',
-            hero_desc_ku: document.getElementById('heroDesc_ku')?.value || '',
-            hero_desc_ar: document.getElementById('heroDesc_ar')?.value || '',
+            hero_btn1_en: document.getElementById('heroBtn1_en')?.value || '',
+            hero_btn2_en: document.getElementById('heroBtn2_en')?.value || '',
             branches_title_en: document.getElementById('branchesTitle_en')?.value || '',
-            branches_title_ku: document.getElementById('branchesTitle_ku')?.value || '',
-            branches_title_ar: document.getElementById('branchesTitle_ar')?.value || '',
+            branches_desc_en: document.getElementById('branchesDesc_en')?.value || '',
             service_title_en: document.getElementById('serviceTitle_en')?.value || '',
+            service_desc_en: document.getElementById('serviceDesc_en')?.value || '',
+            contact_title_en: document.getElementById('contactTitle_en')?.value || '',
+            contact_desc_en: document.getElementById('contactDesc_en')?.value || '',
+            footer_tagline_en: document.getElementById('footerTagline_en')?.value || '',
+            // Kurdish
+            hero_title_ku: document.getElementById('heroTitle_ku')?.value || '',
+            hero_desc_ku: document.getElementById('heroDesc_ku')?.value || '',
+            hero_btn1_ku: document.getElementById('heroBtn1_ku')?.value || '',
+            hero_btn2_ku: document.getElementById('heroBtn2_ku')?.value || '',
+            branches_title_ku: document.getElementById('branchesTitle_ku')?.value || '',
+            branches_desc_ku: document.getElementById('branchesDesc_ku')?.value || '',
             service_title_ku: document.getElementById('serviceTitle_ku')?.value || '',
-            service_title_ar: document.getElementById('serviceTitle_ar')?.value || ''
+            service_desc_ku: document.getElementById('serviceDesc_ku')?.value || '',
+            contact_title_ku: document.getElementById('contactTitle_ku')?.value || '',
+            contact_desc_ku: document.getElementById('contactDesc_ku')?.value || '',
+            footer_tagline_ku: document.getElementById('footerTagline_ku')?.value || '',
+            // Arabic
+            hero_title_ar: document.getElementById('heroTitle_ar')?.value || '',
+            hero_desc_ar: document.getElementById('heroDesc_ar')?.value || '',
+            hero_btn1_ar: document.getElementById('heroBtn1_ar')?.value || '',
+            hero_btn2_ar: document.getElementById('heroBtn2_ar')?.value || '',
+            branches_title_ar: document.getElementById('branchesTitle_ar')?.value || '',
+            branches_desc_ar: document.getElementById('branchesDesc_ar')?.value || '',
+            service_title_ar: document.getElementById('serviceTitle_ar')?.value || '',
+            service_desc_ar: document.getElementById('serviceDesc_ar')?.value || '',
+            contact_title_ar: document.getElementById('contactTitle_ar')?.value || '',
+            contact_desc_ar: document.getElementById('contactDesc_ar')?.value || '',
+            footer_tagline_ar: document.getElementById('footerTagline_ar')?.value || ''
         }
     };
     
     localStorage.setItem('sweetPharmaData', JSON.stringify(data));
     
-    // Show success message
-    const successMsg = document.getElementById('successMessage');
-    successMsg.style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    
-    setTimeout(() => {
-        successMsg.style.display = 'none';
-    }, 3000);
+    // Show success
+    const msg = document.getElementById('successMessage');
+    msg.style.display = 'block';
+    setTimeout(() => msg.style.display = 'none', 3000);
 }
 
-// Load data
 function loadData() {
-    const savedData = localStorage.getItem('sweetPharmaData');
+    const saved = localStorage.getItem('sweetPharmaData');
     
-    if (savedData) {
-        const data = JSON.parse(savedData);
+    if (saved) {
+        const data = JSON.parse(saved);
         
         // Load branches
         branches = data.branches || [];
         renderBranches();
         
-        // Load service data
+        // Load social media
+        socialMedia = data.socialMedia || [];
+        renderSocialMedia();
+        
+        // Load service phone
         if (data.service_phone) {
             document.getElementById('servicePhone').value = data.service_phone;
         }
         
-        // Load social media
-        if (data.social_facebook) {
-            document.getElementById('socialFacebook').value = data.social_facebook;
-        }
-        if (data.social_instagram) {
-            document.getElementById('socialInstagram').value = data.social_instagram;
-        }
-        if (data.social_tiktok) {
-            document.getElementById('socialTiktok').value = data.social_tiktok;
-        }
-        if (data.social_snapchat) {
-            document.getElementById('socialSnapchat').value = data.social_snapchat;
-        }
-        
-        // Load CMS content
+        // Load content
         if (data.content) {
-            const fields = [
-                'heroTitle_en', 'heroTitle_ku', 'heroTitle_ar',
-                'heroDesc_en', 'heroDesc_ku', 'heroDesc_ar',
-                'branchesTitle_en', 'branchesTitle_ku', 'branchesTitle_ar',
-                'serviceTitle_en', 'serviceTitle_ku', 'serviceTitle_ar'
-            ];
-            
-            fields.forEach(field => {
-                const element = document.getElementById(field);
-                const dataKey = field.replace(/_/g, '_').toLowerCase();
-                if (element && data.content[dataKey]) {
-                    element.value = data.content[dataKey];
-                }
+            Object.keys(data.content).forEach(key => {
+                const el = document.getElementById(key);
+                if (el) el.value = data.content[key];
             });
         }
-    } else {
-        // No saved data - start fresh
-        branches = [];
-        renderBranches();
     }
 }
+
+// ========== LOGIN & LOGOUT ==========
+function login(event) {
+    if (event) event.preventDefault();
+    
+    const password = document.getElementById('passwordInput').value;
+    const errorMsg = document.getElementById('loginError');
+    
+    if (password === PASSWORD) {
+        // Save session
+        sessionStorage.setItem('adminLoggedIn', 'true');
+        console.log('✅ Login successful - session saved');
+        
+        // Hide login screen, show admin panel
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('adminDashboard').style.display = 'block';
+        
+        // Load data
+        loadData();
+        
+        // Clear password field
+        document.getElementById('passwordInput').value = '';
+        errorMsg.style.display = 'none';
+    } else {
+        // Show error
+        errorMsg.style.display = 'block';
+        console.log('❌ Wrong password');
+    }
+    
+    return false;
+}
+
+function logout() {
+    if (confirm('Are you sure you want to logout?')) {
+        // Clear session
+        sessionStorage.removeItem('adminLoggedIn');
+        console.log('🚪 Logged out - session cleared');
+        
+        // Show login screen, hide admin panel
+        document.getElementById('loginScreen').style.display = 'flex';
+        document.getElementById('adminDashboard').style.display = 'none';
+        
+        // Clear password field
+        document.getElementById('passwordInput').value = '';
+    }
+}
+
+// ========== INITIALIZATION ==========
+window.addEventListener('DOMContentLoaded', () => {
+    console.log('🚀 Admin panel loading...');
+    
+    // Check if user is already logged in
+    const isLoggedIn = sessionStorage.getItem('adminLoggedIn');
+    console.log('🔍 Checking session:', isLoggedIn);
+    
+    if (isLoggedIn === 'true') {
+        // Auto-login: show admin panel
+        console.log('✅ Session found - auto login');
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('adminDashboard').style.display = 'block';
+        loadData();
+    } else {
+        // Show login screen
+        console.log('❌ No session - show login');
+        document.getElementById('loginScreen').style.display = 'flex';
+        document.getElementById('adminDashboard').style.display = 'none';
+    }
+    
+    // Setup login form
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', login);
+        console.log('✅ Login form event attached');
+    }
+    
+    // Initialize content language tab
+    switchContentLang('en');
+    
+    console.log('✅ Admin panel ready!');
+});
