@@ -68,75 +68,201 @@
             <!-- Content/CMS Tab -->
             <div class="tab-content active" id="content">
                 <div class="card">
-                    <h2 data-admin-i18n="content.title">📝 Website Content & Titles</h2>
-                    <p style="color: var(--text-light); margin-bottom: 2rem;" data-admin-i18n="content.description">
-                        Edit all text content that appears on your website. Changes will be visible in all languages.
-                    </p>
-
-                    <h3 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--accent);" data-admin-i18n="content.hero">Hero Section</h3>
+                    <h2 data-admin-i18n="content.title">📝 Website Content Management</h2>
                     
-                    <div class="form-group">
-                        <label data-admin-i18n="content.heroTitle">Main Title (Hero)</label>
-                        <input type="text" id="heroTitle_en" placeholder="Your Health is Our Priority">
-                        <small data-admin-i18n="content.english">English</small>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label data-admin-i18n="content.heroTitleKu">Main Title (Kurdish)</label>
-                        <input type="text" id="heroTitle_ku" placeholder="تەندروستی ئێوە لە پێشینەی کارەکانماندایە" dir="rtl">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label data-admin-i18n="content.heroTitleAr">Main Title (Arabic)</label>
-                        <input type="text" id="heroTitle_ar" placeholder="صحتك أولويتنا" dir="rtl">
+                    <!-- Language Selector -->
+                    <div class="language-selector">
+                        <label data-admin-i18n="content.selectLang">Select Language to Edit:</label>
+                        <div class="lang-buttons-large">
+                            <button class="lang-btn-large active" onclick="switchContentLang('en')" data-lang="en">
+                                🇬🇧 English
+                            </button>
+                            <button class="lang-btn-large" onclick="switchContentLang('ku')" data-lang="ku">
+                                🇮🇶 کوردی (Kurdish)
+                            </button>
+                            <button class="lang-btn-large" onclick="switchContentLang('ar')" data-lang="ar">
+                                🇸🇦 العربية (Arabic)
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <label data-admin-i18n="content.heroDesc">Hero Description (English)</label>
-                        <textarea id="heroDesc_en" placeholder="Providing world-class pharmaceutical and medical laboratory services..."></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label data-admin-i18n="content.heroDescKu">Hero Description (Kurdish)</label>
-                        <textarea id="heroDesc_ku" placeholder="خزمەتگوزاری دەرمانخانە و تاقیگەی پزیشکی..." dir="rtl"></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label data-admin-i18n="content.heroDescAr">Hero Description (Arabic)</label>
-                        <textarea id="heroDesc_ar" placeholder="نقدم خدمات صيدلانية ومخبرية طبية..." dir="rtl"></textarea>
-                    </div>
-
-                    <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: var(--accent);" data-admin-i18n="content.branches">Branches Section</h3>
-                    
-                    <div class="form-row">
+                    <!-- English Content -->
+                    <div class="content-lang-section active" id="content-en">
+                        <h3 style="margin-top: 2rem; margin-bottom: 1.5rem; color: var(--accent);">🇬🇧 English Content</h3>
+                        
                         <div class="form-group">
-                            <label data-admin-i18n="content.branchesTitle">Section Title (English)</label>
+                            <label>Hero Title</label>
+                            <input type="text" id="heroTitle_en" placeholder="Your Health is Our Priority">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Hero Description</label>
+                            <textarea id="heroDesc_en" placeholder="Providing world-class pharmaceutical and medical laboratory services..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Hero Button 1 Text</label>
+                            <input type="text" id="heroBtn1_en" placeholder="Our Locations">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Hero Button 2 Text</label>
+                            <input type="text" id="heroBtn2_en" placeholder="Contact Us">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Branches Section Title</label>
                             <input type="text" id="branchesTitle_en" placeholder="Our Service Locations">
                         </div>
+
                         <div class="form-group">
-                            <label data-admin-i18n="content.branchesTitleKu">Section Title (Kurdish)</label>
-                            <input type="text" id="branchesTitle_ku" placeholder="شوێنەکانی خزمەتگوزاری" dir="rtl">
+                            <label>Branches Section Description</label>
+                            <input type="text" id="branchesDesc_en" placeholder="Visit us at any of our branches in Erbil">
                         </div>
+                        
                         <div class="form-group">
-                            <label data-admin-i18n="content.branchesTitleAr">Section Title (Arabic)</label>
-                            <input type="text" id="branchesTitle_ar" placeholder="مواقع خدماتنا" dir="rtl">
+                            <label>Service Title</label>
+                            <input type="text" id="serviceTitle_en" placeholder="Home Testing Service">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Service Description</label>
+                            <textarea id="serviceDesc_en" placeholder="Now you can perform health tests from the comfort of your home..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Contact Section Title</label>
+                            <input type="text" id="contactTitle_en" placeholder="Get in Touch">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Contact Section Description</label>
+                            <input type="text" id="contactDesc_en" placeholder="We're here to answer your questions...">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Footer Tagline</label>
+                            <input type="text" id="footerTagline_en" placeholder="Providing world-class healthcare services">
                         </div>
                     </div>
 
-                    <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: var(--accent);" data-admin-i18n="content.service">Home Service Section</h3>
-                    
-                    <div class="form-row">
+                    <!-- Kurdish Content -->
+                    <div class="content-lang-section" id="content-ku">
+                        <h3 style="margin-top: 2rem; margin-bottom: 1.5rem; color: var(--accent);">🇮🇶 کوردی (Kurdish Content)</h3>
+                        
                         <div class="form-group">
-                            <label data-admin-i18n="content.serviceTitle">Service Title (English)</label>
-                            <input type="text" id="serviceTitle_en" placeholder="Home Testing Service">
+                            <label>سەردێڕی سەرەکی (Hero Title)</label>
+                            <input type="text" id="heroTitle_ku" placeholder="تەندروستی ئێوە لە پێشینەی کارەکانماندایە" dir="rtl">
                         </div>
+                        
                         <div class="form-group">
-                            <label data-admin-i18n="content.serviceTitleKu">Service Title (Kurdish)</label>
+                            <label>وەسفی سەرەکی (Hero Description)</label>
+                            <textarea id="heroDesc_ku" placeholder="خزمەتگوزاری دەرمانخانە و تاقیگەی پزیشکی..." dir="rtl"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>دەقی دوگمەی ١</label>
+                            <input type="text" id="heroBtn1_ku" placeholder="شوێنەکانی خزمەتگوزاری" dir="rtl">
+                        </div>
+
+                        <div class="form-group">
+                            <label>دەقی دوگمەی ٢</label>
+                            <input type="text" id="heroBtn2_ku" placeholder="پەیوەندی بکە" dir="rtl">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>سەردێڕی بەشی لقەکان</label>
+                            <input type="text" id="branchesTitle_ku" placeholder="شوێنەکانی خزمەتگوزاری" dir="rtl">
+                        </div>
+
+                        <div class="form-group">
+                            <label>وەسفی بەشی لقەکان</label>
+                            <input type="text" id="branchesDesc_ku" placeholder="سەردانی هەر کامێک لە لقەکانمان بکە" dir="rtl">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>سەردێڕی خزمەت</label>
                             <input type="text" id="serviceTitle_ku" placeholder="خزمەتی تاقیگە لە ماڵەوە" dir="rtl">
                         </div>
+
                         <div class="form-group">
-                            <label data-admin-i18n="content.serviceTitleAr">Service Title (Arabic)</label>
+                            <label>وەسفی خزمەت</label>
+                            <textarea id="serviceDesc_ku" placeholder="ئێستا دەتوانیت پشکنینی تەندروستی لە ئاسوودەیی ماڵەکەتەوە..." dir="rtl"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>سەردێڕی پەیوەندی</label>
+                            <input type="text" id="contactTitle_ku" placeholder="پەیوەندیمان پێوە بکە" dir="rtl">
+                        </div>
+
+                        <div class="form-group">
+                            <label>وەسفی پەیوەندی</label>
+                            <input type="text" id="contactDesc_ku" placeholder="ئامادەین وەڵامی پرسیارەکانت بدەینەوە..." dir="rtl">
+                        </div>
+
+                        <div class="form-group">
+                            <label>دەقی فووتەر</label>
+                            <input type="text" id="footerTagline_ku" placeholder="خزمەتگوزاری تەندروستی بە پێوەرە جیهانیەکان" dir="rtl">
+                        </div>
+                    </div>
+
+                    <!-- Arabic Content -->
+                    <div class="content-lang-section" id="content-ar">
+                        <h3 style="margin-top: 2rem; margin-bottom: 1.5rem; color: var(--accent);">🇸🇦 العربية (Arabic Content)</h3>
+                        
+                        <div class="form-group">
+                            <label>العنوان الرئيسي</label>
+                            <input type="text" id="heroTitle_ar" placeholder="صحتك أولويتنا" dir="rtl">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>الوصف الرئيسي</label>
+                            <textarea id="heroDesc_ar" placeholder="نقدم خدمات صيدلانية ومخبرية طبية..." dir="rtl"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>نص الزر ١</label>
+                            <input type="text" id="heroBtn1_ar" placeholder="مواقعنا" dir="rtl">
+                        </div>
+
+                        <div class="form-group">
+                            <label>نص الزر ٢</label>
+                            <input type="text" id="heroBtn2_ar" placeholder="اتصل بنا" dir="rtl">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>عنوان قسم الفروع</label>
+                            <input type="text" id="branchesTitle_ar" placeholder="مواقع خدماتنا" dir="rtl">
+                        </div>
+
+                        <div class="form-group">
+                            <label>وصف قسم الفروع</label>
+                            <input type="text" id="branchesDesc_ar" placeholder="قم بزيارتنا في أي من فروعنا" dir="rtl">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>عنوان الخدمة</label>
                             <input type="text" id="serviceTitle_ar" placeholder="خدمة الفحوصات المنزلية" dir="rtl">
+                        </div>
+
+                        <div class="form-group">
+                            <label>وصف الخدمة</label>
+                            <textarea id="serviceDesc_ar" placeholder="الآن يمكنك إجراء الفحوصات الصحية من راحة منزلك..." dir="rtl"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>عنوان قسم الاتصال</label>
+                            <input type="text" id="contactTitle_ar" placeholder="تواصل معنا" dir="rtl">
+                        </div>
+
+                        <div class="form-group">
+                            <label>وصف قسم الاتصال</label>
+                            <input type="text" id="contactDesc_ar" placeholder="نحن هنا للإجابة على أسئلتك..." dir="rtl">
+                        </div>
+
+                        <div class="form-group">
+                            <label>نص الفوتر</label>
+                            <input type="text" id="footerTagline_ar" placeholder="نقدم خدمات صحية بمعايير عالمية" dir="rtl">
                         </div>
                     </div>
                 </div>
@@ -147,17 +273,16 @@
                 <div class="card">
                     <h2 data-admin-i18n="branches.title">🏥 Branch Management</h2>
                     <p style="color: var(--text-light); margin-bottom: 2rem;" data-admin-i18n="branches.description">
-                        Add and manage all your service locations. Each branch will appear on the main website.
+                        Add and manage all your service locations. Click on a branch to expand and edit.
                     </p>
 
-                    <div class="action-buttons" style="margin-bottom: 3rem;">
+                    <div class="action-buttons" style="margin-bottom: 2rem;">
                         <button class="btn btn-primary" onclick="addNewBranch()" data-admin-i18n="branches.addNew">
                             ➕ Add New Branch
                         </button>
                     </div>
 
                     <div id="branchesContainer">
-                        <!-- Branches will be dynamically added here -->
                         <div class="empty-state" id="emptyState">
                             <div class="empty-icon">🏥</div>
                             <h3 data-admin-i18n="branches.noBranches">No Branches Yet</h3>
@@ -182,28 +307,19 @@
             <!-- Social Media Tab -->
             <div class="tab-content" id="social">
                 <div class="card">
-                    <h2 data-admin-i18n="social.title">📱 Social Media Links</h2>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Facebook</label>
-                            <input type="url" id="socialFacebook" placeholder="https://facebook.com/yourpage">
-                        </div>
-                        <div class="form-group">
-                            <label>Instagram</label>
-                            <input type="url" id="socialInstagram" placeholder="https://instagram.com/yourpage">
-                        </div>
+                    <h2 data-admin-i18n="social.title">📱 Social Media Management</h2>
+                    <p style="color: var(--text-light); margin-bottom: 2rem;">
+                        Add and manage your social media links with custom icons.
+                    </p>
+
+                    <div class="action-buttons" style="margin-bottom: 2rem;">
+                        <button class="btn btn-primary" onclick="addSocialMedia()">
+                            ➕ Add Social Media
+                        </button>
                     </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>TikTok</label>
-                            <input type="url" id="socialTiktok" placeholder="https://tiktok.com/@yourpage">
-                        </div>
-                        <div class="form-group">
-                            <label>Snapchat</label>
-                            <input type="url" id="socialSnapchat" placeholder="https://snapchat.com/add/yourpage">
-                        </div>
+
+                    <div id="socialMediaContainer">
+                        <!-- Social media items will be added here -->
                     </div>
                 </div>
             </div>
@@ -213,6 +329,21 @@
                 <button class="btn btn-primary btn-save" onclick="saveData()" data-admin-i18n="admin.saveChanges">
                     💾 Save All Changes
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Icon Picker Modal -->
+    <div class="modal" id="iconPickerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Select Icon</h3>
+                <button class="modal-close" onclick="closeIconPicker()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="icon-grid" id="iconGrid">
+                    <!-- Icons will be populated here -->
+                </div>
             </div>
         </div>
     </div>
