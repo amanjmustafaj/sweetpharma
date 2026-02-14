@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Sweet Pharma</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Admin CSS File -->
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div class="login-container" id="loginScreen">
+        <div class="login-box">
+            <h1>🔐 Admin Panel</h1>
+            <p>Please enter your password to continue</p>
+            <div class="error-message" id="loginError">Incorrect password!</div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="passwordInput" placeholder="Enter password" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+            </form>
+            <p style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-light);">
+                Default password: <strong>sweet2024</strong>
+            </p>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div class="admin-container" id="adminDashboard">
+        <div class="admin-header">
+            <h1 data-admin-i18n="admin.title">Sweet Pharma - Admin Panel</h1>
+            <div class="admin-header-actions">
+                <div class="admin-lang-switcher">
+                    <button class="lang-btn active" onclick="changeAdminLanguage('en')" data-lang="en">EN</button>
+                    <button class="lang-btn" onclick="changeAdminLanguage('ku')" data-lang="ku">کو</button>
+                    <button class="lang-btn" onclick="changeAdminLanguage('ar')" data-lang="ar">ع</button>
+                </div>
+                <a href="index.html" target="_blank" class="btn btn-secondary" data-admin-i18n="admin.preview">
+                    👁️ Preview Website
+                </a>
+                <button class="btn btn-danger" onclick="logout()" data-admin-i18n="admin.logout">Logout</button>
+            </div>
+        </div>
+
+        <div class="admin-content">
+            <div class="success-message" id="successMessage" data-admin-i18n="admin.successMsg">Changes saved successfully! ✓</div>
+
+            <div class="info-box">
+                <h3 data-admin-i18n="admin.welcome">👋 Welcome to Admin Panel</h3>
+                <p data-admin-i18n="admin.welcomeText">Manage all aspects of your website from here. Remember to click "Save Changes" after making any modifications.</p>
+            </div>
+
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('content')" data-admin-i18n="tabs.content">Website Content</button>
+                <button class="tab" onclick="showTab('branches')" data-admin-i18n="tabs.branches">Branches</button>
+                <button class="tab" onclick="showTab('service')" data-admin-i18n="tabs.service">Home Service</button>
+                <button class="tab" onclick="showTab('social')" data-admin-i18n="tabs.social">Social Media</button>
+            </div>
+
+            <!-- Content/CMS Tab -->
+            <div class="tab-content active" id="content">
+                <div class="card">
+                    <h2 data-admin-i18n="content.title">📝 Website Content & Titles</h2>
+                    <p style="color: var(--text-light); margin-bottom: 2rem;" data-admin-i18n="content.description">
+                        Edit all text content that appears on your website. Changes will be visible in all languages.
+                    </p>
+
+                    <h3 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--accent);" data-admin-i18n="content.hero">Hero Section</h3>
+                    
+                    <div class="form-group">
+                        <label data-admin-i18n="content.heroTitle">Main Title (Hero)</label>
+                        <input type="text" id="heroTitle_en" placeholder="Your Health is Our Priority">
+                        <small data-admin-i18n="content.english">English</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label data-admin-i18n="content.heroTitleKu">Main Title (Kurdish)</label>
+                        <input type="text" id="heroTitle_ku" placeholder="تەندروستی ئێوە لە پێشینەی کارەکانماندایە" dir="rtl">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label data-admin-i18n="content.heroTitleAr">Main Title (Arabic)</label>
+                        <input type="text" id="heroTitle_ar" placeholder="صحتك أولويتنا" dir="rtl">
+                    </div>
+
+                    <div class="form-group">
+                        <label data-admin-i18n="content.heroDesc">Hero Description (English)</label>
+                        <textarea id="heroDesc_en" placeholder="Providing world-class pharmaceutical and medical laboratory services..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label data-admin-i18n="content.heroDescKu">Hero Description (Kurdish)</label>
+                        <textarea id="heroDesc_ku" placeholder="خزمەتگوزاری دەرمانخانە و تاقیگەی پزیشکی..." dir="rtl"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label data-admin-i18n="content.heroDescAr">Hero Description (Arabic)</label>
+                        <textarea id="heroDesc_ar" placeholder="نقدم خدمات صيدلانية ومخبرية طبية..." dir="rtl"></textarea>
+                    </div>
+
+                    <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: var(--accent);" data-admin-i18n="content.branches">Branches Section</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-admin-i18n="content.branchesTitle">Section Title (English)</label>
+                            <input type="text" id="branchesTitle_en" placeholder="Our Service Locations">
+                        </div>
+                        <div class="form-group">
+                            <label data-admin-i18n="content.branchesTitleKu">Section Title (Kurdish)</label>
+                            <input type="text" id="branchesTitle_ku" placeholder="شوێنەکانی خزمەتگوزاری" dir="rtl">
+                        </div>
+                        <div class="form-group">
+                            <label data-admin-i18n="content.branchesTitleAr">Section Title (Arabic)</label>
+                            <input type="text" id="branchesTitle_ar" placeholder="مواقع خدماتنا" dir="rtl">
+                        </div>
+                    </div>
+
+                    <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: var(--accent);" data-admin-i18n="content.service">Home Service Section</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-admin-i18n="content.serviceTitle">Service Title (English)</label>
+                            <input type="text" id="serviceTitle_en" placeholder="Home Testing Service">
+                        </div>
+                        <div class="form-group">
+                            <label data-admin-i18n="content.serviceTitleKu">Service Title (Kurdish)</label>
+                            <input type="text" id="serviceTitle_ku" placeholder="خزمەتی تاقیگە لە ماڵەوە" dir="rtl">
+                        </div>
+                        <div class="form-group">
+                            <label data-admin-i18n="content.serviceTitleAr">Service Title (Arabic)</label>
+                            <input type="text" id="serviceTitle_ar" placeholder="خدمة الفحوصات المنزلية" dir="rtl">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Branches Tab -->
+            <div class="tab-content" id="branches">
+                <div class="card">
+                    <h2 data-admin-i18n="branches.title">🏥 Branch Management</h2>
+                    <p style="color: var(--text-light); margin-bottom: 2rem;" data-admin-i18n="branches.description">
+                        Add and manage all your service locations. Each branch will appear on the main website.
+                    </p>
+
+                    <div class="action-buttons" style="margin-bottom: 3rem;">
+                        <button class="btn btn-primary" onclick="addNewBranch()" data-admin-i18n="branches.addNew">
+                            ➕ Add New Branch
+                        </button>
+                    </div>
+
+                    <div id="branchesContainer">
+                        <!-- Branches will be dynamically added here -->
+                        <div class="empty-state" id="emptyState">
+                            <div class="empty-icon">🏥</div>
+                            <h3 data-admin-i18n="branches.noBranches">No Branches Yet</h3>
+                            <p data-admin-i18n="branches.noBranchesText">Click "Add New Branch" to create your first service location</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Home Service Tab -->
+            <div class="tab-content" id="service">
+                <div class="card">
+                    <h2 data-admin-i18n="service.title">🏠 Home Testing Service</h2>
+                    
+                    <div class="form-group">
+                        <label data-admin-i18n="service.phone">Service Phone Number</label>
+                        <input type="tel" id="servicePhone" placeholder="+964 750 503 1001" value="+964 750 503 1001">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Media Tab -->
+            <div class="tab-content" id="social">
+                <div class="card">
+                    <h2 data-admin-i18n="social.title">📱 Social Media Links</h2>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Facebook</label>
+                            <input type="url" id="socialFacebook" placeholder="https://facebook.com/yourpage">
+                        </div>
+                        <div class="form-group">
+                            <label>Instagram</label>
+                            <input type="url" id="socialInstagram" placeholder="https://instagram.com/yourpage">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>TikTok</label>
+                            <input type="url" id="socialTiktok" placeholder="https://tiktok.com/@yourpage">
+                        </div>
+                        <div class="form-group">
+                            <label>Snapchat</label>
+                            <input type="url" id="socialSnapchat" placeholder="https://snapchat.com/add/yourpage">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Save Button (Fixed at bottom) -->
+            <div class="save-button-container">
+                <button class="btn btn-primary btn-save" onclick="saveData()" data-admin-i18n="admin.saveChanges">
+                    💾 Save All Changes
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin JavaScript File -->
+    <script src="js/admin.js"></script>
+</body>
+</html>
